@@ -1,0 +1,385 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Ayodeji's 7-Day Meal Plan with Fruits</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2.5cm 2cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Georgia', 'Times New Roman', serif;
+            line-height: 1.75;
+            color: #2c3e50;
+            background: #ffffff;
+            padding: 0;
+            font-size: 11pt;
+        }
+        
+        /* Mobile and Tablet Responsive Font Sizing */
+        @media screen and (max-width: 768px) {
+            body {
+                font-size: 16pt;
+                padding: 10px;
+                line-height: 1.8;
+            }
+            .document-container {
+                padding: 15px 12px;
+                max-width: 100%;
+            }
+            .document-header {
+                padding-bottom: 20px;
+                margin-bottom: 30px;
+            }
+            .document-header .document-type {
+                font-size: 10pt;
+            }
+            .document-header h1 {
+                font-size: 22pt !important;
+                line-height: 1.3;
+                margin-bottom: 10px;
+            }
+            .document-header .subtitle {
+                font-size: 13pt;
+                margin-bottom: 15px;
+            }
+            .meal-plan-table {
+                font-size: 11pt;
+                display: block;
+                overflow-x: auto;
+                -webkit-overflow-scrolling: touch;
+            }
+            .meal-plan-table th,
+            .meal-plan-table td {
+                padding: 10px 8px;
+                font-size: 11pt;
+                min-width: 100px;
+            }
+        }
+        
+        @media screen and (min-width: 769px) and (max-width: 1024px) {
+            body {
+                font-size: 13pt;
+                padding: 20px;
+            }
+            .document-container {
+                padding: 30px 35px;
+            }
+            .document-header h1 {
+                font-size: 28pt !important;
+            }
+            .meal-plan-table {
+                font-size: 10pt;
+            }
+        }
+        
+        /* Very small mobile devices */
+        @media screen and (max-width: 480px) {
+            body {
+                font-size: 15pt;
+                padding: 8px;
+            }
+            .document-container {
+                padding: 12px 10px;
+            }
+            .document-header h1 {
+                font-size: 20pt !important;
+            }
+            .meal-plan-table {
+                font-size: 10pt;
+            }
+            .meal-plan-table th,
+            .meal-plan-table td {
+                padding: 8px 6px;
+                font-size: 10pt;
+            }
+        }
+        
+        .document-container {
+            max-width: 210mm;
+            margin: 0 auto;
+            padding: 40px 50px;
+            background: #ffffff;
+        }
+        
+        /* Header - Formal Style */
+        .document-header {
+            border-bottom: 3px solid #1a1a2e;
+            padding-bottom: 25px;
+            margin-bottom: 40px;
+            text-align: left;
+        }
+        
+        .document-header .document-type {
+            font-size: 9pt;
+            letter-spacing: 2px;
+            text-transform: uppercase;
+            color: #7f8c8d;
+            margin-bottom: 8px;
+            font-weight: 600;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .document-header h1 {
+            font-size: 32pt;
+            color: #1a1a2e;
+            margin-bottom: 12px;
+            font-weight: 400;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+        
+        .document-header .subtitle {
+            font-size: 14pt;
+            color: #5a6c7d;
+            font-style: italic;
+            margin-bottom: 20px;
+        }
+        
+        .document-meta {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 20px;
+            padding-top: 15px;
+            border-top: 1px solid #e0e0e0;
+            font-size: 9pt;
+            color: #7f8c8d;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        /* Section Styling */
+        .section {
+            margin-bottom: 50px;
+            page-break-inside: avoid;
+        }
+        
+        h2 {
+            font-size: 22pt;
+            color: #1a1a2e;
+            margin: 45px 0 25px 0;
+            padding-bottom: 12px;
+            border-bottom: 2px solid #34495e;
+            font-weight: 400;
+            font-family: 'Georgia', serif;
+        }
+        
+        /* Table Wrapper for Mobile Scrolling */
+        .table-wrapper {
+            overflow-x: auto;
+            -webkit-overflow-scrolling: touch;
+            margin: 25px 0;
+        }
+        
+        @media screen and (max-width: 768px) {
+            .table-wrapper {
+                margin: 20px -12px;
+                padding: 0 12px;
+            }
+        }
+        
+        /* Meal Plan Table - Formal Style */
+        .meal-plan-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 0;
+            font-size: 10pt;
+            border: 1px solid #d5d8dc;
+        }
+        
+        .meal-plan-table th {
+            background: #34495e;
+            color: #ffffff;
+            padding: 14px 12px;
+            text-align: left;
+            font-weight: 600;
+            font-family: 'Arial', sans-serif;
+            border: 1px solid #2c3e50;
+            vertical-align: top;
+        }
+        
+        .meal-plan-table td {
+            padding: 12px;
+            border: 1px solid #e0e0e0;
+            vertical-align: top;
+            line-height: 1.6;
+        }
+        
+        .meal-plan-table tr:nth-child(even) {
+            background: #f8f9fa;
+        }
+        
+        .meal-plan-table .day-cell {
+            background: #ecf0f1;
+            font-weight: 600;
+            color: #1a1a2e;
+            font-family: 'Arial', sans-serif;
+            width: 100px;
+        }
+        
+        .meal-plan-table .meal-cell {
+            font-size: 9.5pt;
+        }
+        
+        /* Footer */
+        .document-footer {
+            margin-top: 60px;
+            padding-top: 25px;
+            border-top: 2px solid #d5d8dc;
+            font-size: 9pt;
+            color: #7f8c8d;
+            text-align: center;
+        }
+        
+        .document-footer h3 {
+            color: #34495e;
+            font-size: 11pt;
+            margin-bottom: 15px;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .document-footer p {
+            margin: 8px 0;
+            line-height: 1.6;
+        }
+        
+        /* General Typography */
+        p {
+            margin-bottom: 15px;
+            text-align: justify;
+            line-height: 1.75;
+        }
+        
+        /* Print Styles */
+        @media print {
+            body {
+                padding: 0;
+            }
+            .document-container {
+                padding: 0;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+            .meal-plan-table {
+                page-break-inside: avoid;
+            }
+            h2 {
+                page-break-after: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="document-container">
+        <div class="document-header">
+            <div class="document-type">Nutritional Guide</div>
+            <h1> Ayodeji's 7-Day Meal Plan with Fruits</h1>
+            <div class="subtitle">A Balanced Weekly Nutrition Plan</div>
+            <div class="document-meta">
+                <div>Prepared: <span id="date"></span></div>
+            </div>
+        </div>
+
+        <div class="section">
+            <h2>Weekly Meal Schedule</h2>
+            
+            <div class="table-wrapper">
+            <table class="meal-plan-table">
+                <thead>
+                    <tr>
+                        <th>Day</th>
+                        <th>Breakfast</th>
+                        <th>Mid-Day Snack</th>
+                        <th>Lunch</th>
+                        <th>Dinner</th>
+                        <th>Drink For The Day</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    <tr>
+                        <td class="day-cell">Monday</td>
+                        <td class="meal-cell">Oatmeal / Pap with sliced banana + boiled egg</td>
+                        <td class="meal-cell">Oranges or tangerines</td>
+                        <td class="meal-cell">Rice with fish sauce / efo riro (made with minimal palm oil)</td>
+                        <td class="meal-cell">Fruit Mix</td>
+                        <td class="meal-cell">Zobo/Tigernut</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Tuesday</td>
+                        <td class="meal-cell">Whole wheat bread with fish sauce</td>
+                        <td class="meal-cell">Pineapple chunks</td>
+                        <td class="meal-cell">Vegetable with boiled plaintain</td>
+                        <td class="meal-cell">Eba (moderate portion) with okra soup (with smoked fish)</td>
+                        <td class="meal-cell">Beetroot</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Wednesday</td>
+                        <td class="meal-cell">Yam porridge with vegetables and fish </td>
+                        <td class="meal-cell">Pawpaw</td>
+                        <td class="meal-cell">Fruit Mix</td>
+                        <td class="meal-cell">Boiled sweet potato & Fried egg</td>
+                        <td class="meal-cell">Zobo/Tigernut</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Thursday</td>
+                        <td class="meal-cell">Beans & Plantain</td>
+                        <td class="meal-cell">Banana & Cucumber</td>
+                        <td class="meal-cell">Pineapple chunks</td>
+                        <td class="meal-cell">Ofada rice with sauce (moderate portion)</td>
+                        <td class="meal-cell">Zobo/Tigernut</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Friday</td>
+                        <td class="meal-cell">Rice & Beans</td>
+                        <td class="meal-cell">Apple slices</td>
+                        <td class="meal-cell">Fruit Mix</td>
+                        <td class="meal-cell">Fufu (moderate portion) with bitterleaf soup + protein of choice</td>
+                        <td class="meal-cell">Ginger tea</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Saturday</td>
+                        <td class="meal-cell">Moi-moi & Pap / Oatmeal</td>
+                        <td class="meal-cell">Grapes & Pineapple</td>
+                        <td class="meal-cell">Jollof rice / Fried + side salad</td>
+                        <td class="meal-cell">Boiled plaintain & Fried egg</td>
+                        <td class="meal-cell">Parfait/Unsweeteened Yogurt</td>
+                    </tr>
+                    <tr>
+                        <td class="day-cell">Sunday</td>
+                        <td class="meal-cell">Fruit salad (watermelon, pineapple, orange, apple) + boiled egg</td>
+                        <td class="meal-cell">Banana</td>
+                        <td class="meal-cell">Egusi soup (minimal palm oil) with swallow of choice + protein + garden egg</td>
+                        <td class="meal-cell">Parfait/Unsweeteened Yogurt</td>
+                        <td class="meal-cell">Zobo/Tigernut</td>
+                    </tr>
+                </tbody>
+            </table>
+            </div>
+        </div>
+
+        <div class="document-footer">
+            <h3>Meal Plan Information</h3>
+            <p><strong>Ayodeji's 7-Day Meal Plan with Fruits</strong></p>
+            <p>A balanced weekly nutrition plan designed to incorporate fruits and healthy meals throughout the week.</p>
+        </div>
+    </div>
+
+    <script>
+        document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    </script>
+</body>
+</html>
+

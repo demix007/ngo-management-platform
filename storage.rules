@@ -1,0 +1,42 @@
+rules_version = '2';
+
+service firebase.storage {
+  match /b/{bucket}/o {
+    // Allow authenticated users to read and write files
+    // Projects documents (including "new" for new projects)
+    match /projects/{projectId}/documents/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+                   && request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+    
+    // Programs documents (monitoring and evaluation reports, including "new" for new programs)
+    match /programs/{programId}/reports/{reportType}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+                   && request.resource.size < 10 * 1024 * 1024; // 10MB limit
+    }
+    
+    // Projects media (photos and videos)
+    match /projects/{projectId}/media/{mediaType}/{fileName} {
+      allow read: if request.auth != null;
+      allow write: if request.auth != null 
+                   && request.resource.size < 50 * 1024 * 1024; // 50MB limit for videos
+    }
+    
+    // Temporary uploads folder for new projects/programs
+    match /temp/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // User-specific files (if needed in the future)
+    match /users/{userId}/{allPaths=**} {
+      allow read, write: if request.auth != null && request.auth.uid == userId;
+    }
+    
+    // Default: deny all other access
+    match /{allPaths=**} {
+      allow read, write: if false;
+    }
+  }
+}

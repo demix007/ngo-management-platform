@@ -1,0 +1,1258 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Management Platform - Cost Analysis</title>
+    <style>
+        @page {
+            size: A4;
+            margin: 2cm;
+        }
+        
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background: #fff;
+            padding: 40px;
+        }
+        
+        .header {
+            text-align: center;
+            border-bottom: 4px solid #2563eb;
+            padding-bottom: 20px;
+            margin-bottom: 40px;
+        }
+        
+        .header h1 {
+            color: #1e40af;
+            font-size: 32px;
+            margin-bottom: 10px;
+        }
+        
+        .header .subtitle {
+            color: #64748b;
+            font-size: 18px;
+            font-weight: 300;
+        }
+        
+        .header img {
+            max-height: 80px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .header img {
+            max-height: 80px;
+            width: auto;
+            object-fit: contain;
+        }
+        
+        .section {
+            margin-bottom: 40px;
+            page-break-inside: avoid;
+        }
+        
+        .section-title {
+            color: #1e40af;
+            font-size: 24px;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #e2e8f0;
+        }
+        
+        .subsection-title {
+            color: #334155;
+            font-size: 20px;
+            margin-top: 30px;
+            margin-bottom: 15px;
+        }
+        
+        .cost-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+            box-shadow: 0 2px 8px rgba(0,0,0,0.1);
+        }
+        
+        .cost-table th {
+            background: #1e40af;
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: 600;
+        }
+        
+        .cost-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .cost-table tr:nth-child(even) {
+            background: #f8fafc;
+        }
+        
+        .cost-table tr:hover {
+            background: #e0e7ff;
+        }
+        
+        .highlight {
+            background: #fef3c7;
+            padding: 20px;
+            border-left: 4px solid #f59e0b;
+            margin: 20px 0;
+            border-radius: 4px;
+        }
+        
+        .highlight h3 {
+            color: #92400e;
+            margin-bottom: 10px;
+        }
+        
+        .pros-list {
+            list-style: none;
+            padding: 0;
+        }
+        
+        .pros-list li {
+            padding: 12px;
+            margin: 8px 0;
+            background: #ecfdf5;
+            border-left: 4px solid #10b981;
+            border-radius: 4px;
+        }
+        
+        .pros-list li::before {
+            content: "✓ ";
+            color: #10b981;
+            font-weight: bold;
+            font-size: 18px;
+            margin-right: 10px;
+        }
+        
+        .comparison-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 20px 0;
+        }
+        
+        .comparison-table th,
+        .comparison-table td {
+            padding: 12px;
+            border: 1px solid #cbd5e1;
+            text-align: left;
+        }
+        
+        .comparison-table th {
+            background: #475569;
+            color: white;
+            font-weight: 600;
+        }
+        
+        .comparison-table .custom-solution {
+            background: #dcfce7;
+        }
+        
+        .comparison-table .existing-solution {
+            background: #fee2e2;
+        }
+        
+        .total-cost {
+            background: #1e40af;
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            text-align: center;
+            margin: 30px 0;
+        }
+        
+        .total-cost h2 {
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+        
+        .total-cost .amount {
+            font-size: 48px;
+            font-weight: bold;
+            margin: 10px 0;
+        }
+        
+        .footer {
+            margin-top: 60px;
+            padding-top: 20px;
+            border-top: 2px solid #e2e8f0;
+            text-align: center;
+            color: #64748b;
+            font-size: 14px;
+        }
+        
+        .roi-section {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 30px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .roi-section h2 {
+            margin-bottom: 20px;
+        }
+        
+        .metric-box {
+            background: rgba(255,255,255,0.1);
+            padding: 20px;
+            border-radius: 6px;
+            margin: 15px 0;
+        }
+        
+        .metric-box .number {
+            font-size: 36px;
+            font-weight: bold;
+            margin-bottom: 5px;
+        }
+        
+        ul {
+            margin-left: 20px;
+            margin-top: 10px;
+        }
+        
+        ul li {
+            margin: 8px 0;
+        }
+        
+        .confidence-box {
+            background: #f0f9ff;
+            border: 2px solid #0ea5e9;
+            padding: 25px;
+            border-radius: 8px;
+            margin: 30px 0;
+        }
+        
+        .confidence-box h3 {
+            color: #0369a1;
+            margin-bottom: 15px;
+        }
+        
+        @media print {
+            body {
+                padding: 0;
+            }
+            .section {
+                page-break-inside: avoid;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div style="display: flex; align-items: center; justify-content: center; gap: 20px; margin-bottom: 20px;">
+            <!-- 
+            INSTRUCTIONS TO ADD LOGO:
+            1. Place your logo file named "kodek-innovations-logo.png" in the same folder as this HTML file
+            2. OR replace the src below with a base64 data URI (use embed-logo.html helper tool to convert)
+            3. Supported formats: PNG, JPG, SVG
+            -->
+            <img src="kodek-innovations-logo.png" 
+                 alt="Kodek Innovations Logo" 
+                 style="height: 80px; width: auto; max-width: 200px; object-fit: contain;"
+                 onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';">
+            <!-- Fallback: Shows if logo file not found -->
+            <div style="display: none; width: 80px; height: 80px; min-width: 80px; background: linear-gradient(135deg, #10b981 0%, #059669 100%); border-radius: 8px; align-items: center; justify-content: center; color: white; font-weight: bold; font-size: 12px; text-align: center; padding: 5px; flex-direction: column;">
+                <div style="font-size: 20px; margin-bottom: 3px; line-height: 1;">K</div>
+                <div style="font-size: 9px; line-height: 1;">KODEK</div>
+            </div>
+            <div style="text-align: left;">
+                <h2 style="color: #1e40af; font-size: 24px; margin: 0;">Kodek Innovations Limited</h2>
+                <p style="color: #64748b; font-size: 14px; margin: 5px 0 0 0;">Digital Transformation & IT Solutions</p>
+            </div>
+        </div>
+        <h1>Integrated Management & Impact System</h1>
+        <div class="subtitle">Cost Analysis & Investment Proposal</div>
+        <div class="subtitle" style="margin-top: 10px; font-size: 14px;">Comprehensive Cost Breakdown & Competitive Advantage Analysis</div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">About Kodek Innovations</h2>
+        <p style="font-size: 16px; line-height: 1.8; text-align: justify; margin-bottom: 20px;">
+            <strong>Kodek Innovations Limited</strong>, established in 2018, is a leading provider of digital transformation 
+            solutions, specializing in E-learning Solutions, Web and Mobile Development, and IT consultancy services. 
+            Driven by a passion for technology and innovation, we deliver solutions that exceed expectations and lay the 
+            foundation for sustained business growth.
+        </p>
+        
+        <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px; margin: 20px 0;">
+            <div style="background: #f0f9ff; padding: 20px; border-radius: 8px; border-left: 4px solid #0ea5e9;">
+                <h3 style="color: #0369a1; margin-bottom: 10px;">Our Mission</h3>
+                <p style="margin: 0; font-size: 15px;">
+                    To empower businesses through technology, delivering IT solutions that address immediate needs 
+                    and lay the foundation for sustained growth.
+                </p>
+            </div>
+            <div style="background: #f0fdf4; padding: 20px; border-radius: 8px; border-left: 4px solid #10b981;">
+                <h3 style="color: #059669; margin-bottom: 10px;">Our Vision</h3>
+                <p style="margin: 0; font-size: 15px;">
+                    To be the leading provider of adaptable solutions to meet the evolving needs of the digital age.
+                </p>
+            </div>
+        </div>
+
+        <h3 class="subsection-title" style="margin-top: 30px;">Why Choose Kodek Innovations</h3>
+        <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 15px; margin-top: 15px;">
+            <div style="padding: 15px; background: #f8fafc; border-radius: 6px;">
+                <strong style="color: #1e40af;">✓ Honesty & Integrity</strong>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">All actions executed with honesty and integrity. We provide honest assessments and quality solutions.</p>
+            </div>
+            <div style="padding: 15px; background: #f8fafc; border-radius: 6px;">
+                <strong style="color: #1e40af;">✓ Professionalism</strong>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">Competent, hard-driving professionals who deliver on promises with excellence.</p>
+            </div>
+            <div style="padding: 15px; background: #f8fafc; border-radius: 6px;">
+                <strong style="color: #1e40af;">✓ Prompt Delivery</strong>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">We deliver every project ON TIME without compromising quality.</p>
+            </div>
+            <div style="padding: 15px; background: #f8fafc; border-radius: 6px;">
+                <strong style="color: #1e40af;">✓ Customer Orientation</strong>
+                <p style="margin: 5px 0 0 0; font-size: 14px;">Customer satisfaction is our priority. We exist to serve and satisfy our clients.</p>
+            </div>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">Executive Summary</h2>
+        <p style="font-size: 16px; line-height: 1.8; text-align: justify;">
+            This document presents a comprehensive cost analysis of the Integrated Management & Impact System (IMIS), 
+            a fully-developed, custom-built management platform ready for handover. Developed by <strong>Kodek Innovations Limited</strong>, 
+            the solution is complete and production-ready, offering exceptional value compared to existing off-the-shelf alternatives. 
+            This one-time investment includes the complete platform, infrastructure coverage, ongoing support, and future enhancement 
+            capabilities. Our platform leverages enterprise-grade Firebase infrastructure to deliver a secure, scalable, 
+            and cost-effective solution tailored specifically for your organization.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">1. One-Time Solution Handover & Pricing Model</h2>
+        
+        <h3 class="subsection-title">1.1 Complete Solution Package (One-Time Payment)</h3>
+        <p style="margin-bottom: 20px;">
+            The Integrated Management & Impact System is fully developed and ready for handover. This one-time payment 
+            includes the complete solution, infrastructure coverage, ongoing support, and future enhancement capabilities:
+        </p>
+        
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Cost Component</th>
+                    <th>Description</th>
+                    <th>Amount (₦)</th>
+                    <th>Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Solution Development & Handover</strong></td>
+                    <td>Complete platform codebase, deployment, configuration, and transfer of ownership</td>
+                    <td>₦5,500,000</td>
+                    <td>57.9%</td>
+                </tr>
+                <tr>
+                    <td><strong>Infrastructure Coverage</strong></td>
+                    <td>Firebase services coverage (Auth, Firestore, Storage, Functions, Hosting)</td>
+                    <td>₦1,200,000</td>
+                    <td>12.6%</td>
+                </tr>
+                <tr>
+                    <td><strong>Support & Maintenance</strong></td>
+                    <td>Regular updates, security patches, bug fixes, technical support</td>
+                    <td>₦1,500,000</td>
+                    <td>15.8%</td>
+                </tr>
+                <tr>
+                    <td><strong>Future Enhancements Credit</strong></td>
+                    <td>Prepaid credit for future feature development and customizations</td>
+                    <td>₦800,000</td>
+                    <td>8.4%</td>
+                </tr>
+                <tr>
+                    <td><strong>Training & Documentation</strong></td>
+                    <td>Comprehensive user training, admin training, technical documentation, and onboarding</td>
+                    <td>₦300,000</td>
+                    <td>3.2%</td>
+                </tr>
+                <tr>
+                    <td><strong>Compliance & Security Setup</strong></td>
+                    <td>Security configuration, compliance setup, audit support, and best practices implementation</td>
+                    <td>₦200,000</td>
+                    <td>2.1%</td>
+                </tr>
+                <tr style="background: #dbeafe; font-weight: bold; font-size: 18px;">
+                    <td><strong>TOTAL ONE-TIME PAYMENT</strong></td>
+                    <td><strong>Complete solution handover with support and infrastructure</strong></td>
+                    <td><strong>₦9,500,000</strong></td>
+                    <td><strong>100%</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight">
+            <h3>What's Included in the One-Time Payment</h3>
+            <p>
+                This <strong>₦9,500,000 one-time payment</strong> provides you with:
+            </p>
+            <ul style="margin-top: 10px;">
+                <li>✅ <strong>Complete Platform Ownership:</strong> Full source code, deployment, and system handover</li>
+                <li>✅ <strong> Infrastructure Coverage:</strong> All Firebase services covered</li>
+                <li>✅ <strong>Support & Maintenance:</strong> Regular updates, security patches, and technical support</li>
+                <li>✅ <strong>Future Enhancement Credit:</strong> ₦800,000 credit for future feature development</li>
+                <li>✅ <strong>Comprehensive Training:</strong> User training, admin training, and complete documentation</li>
+                <li>✅ <strong>Security & Compliance Setup:</strong> Enterprise-grade security configuration</li>
+                <li>✅ <strong>No Recurring Fees:</strong> One payment covers everything for the initial period</li>
+                <li>✅ <strong>Full Data Ownership:</strong> Complete control over your data and platform</li>
+            </ul>
+        </div>
+
+        <h3 class="subsection-title">1.2 Infrastructure Coverage Details</h3>
+        <p style="margin-bottom: 20px;">
+            The one-time payment includes infrastructure coverage. Here's what's covered:
+        </p>
+        
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Service Component</th>
+                    <th>Coverage Period</th>
+                    <th>Estimated Annual Cost</th>
+                    <th>Total Coverage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Firebase Authentication</strong></td>
+                    <td></td>
+                    <td>₦0 (Free tier: 50K users)</td>
+                    <td>₦0</td>
+                </tr>
+                <tr>
+                    <td><strong>Two-Factor Authentication (2FA)</strong></td>
+                    <td></td>
+                    <td>₦18,000 (10K free/month)</td>
+                    <td>₦54,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Firestore Database</strong></td>
+                    <td></td>
+                    <td>₦33,000</td>
+                    <td>₦99,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Cloud Storage</strong></td>
+                    <td></td>
+                    <td>₦114,000</td>
+                    <td>₦342,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Cloud Functions</strong></td>
+                    <td></td>
+                    <td>₦73,500</td>
+                    <td>₦220,500</td>
+                </tr>
+                <tr>
+                    <td><strong>Firebase Hosting</strong></td>
+                    <td></td>
+                    <td>₦0 (Free tier: 10GB)</td>
+                    <td>₦0</td>
+                </tr>
+                <tr>
+                    <td><strong>Notification Services</strong></td>
+                    <td></td>
+                    <td>₦9,000</td>
+                    <td>₦27,000</td>
+                </tr>
+                <tr style="background: #f8fafc; font-weight: bold;">
+                    <td><strong>Total Infrastructure Coverage</strong></td>
+                    <td><strong></strong></td>
+                    <td><strong>₦247,500</strong></td>
+                    <td><strong>₦742,500</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 20px; font-style: italic; color: #64748b;">
+            <strong>Note:</strong> Infrastructure costs are covered. After this period, you can continue 
+            managing infrastructure costs directly with Firebase (typically ₦200,000-₦300,000 per year for 10 users) 
+            or extend coverage through our support package.
+        </p>
+
+        <h3 class="subsection-title">1.3 Post-Handover Support Options</h3>
+        <p style="margin-bottom: 15px;">
+            After the initial support period, you have flexible options for ongoing support:
+        </p>
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Support Package</th>
+                    <th>Duration</th>
+                    <th>Cost (₦)</th>
+                    <th>Includes</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Extended Support</strong></td>
+                    <td></td>
+                    <td>₦750,000</td>
+                    <td>Updates, patches, technical support</td>
+                </tr>
+                <tr>
+                    <td><strong>Infrastructure Extension</strong></td>
+                    <td></td>
+                    <td>₦400,000</td>
+                    <td>Firebase services coverage</td>
+                </tr>
+                <tr>
+                    <td><strong>Feature Development</strong></td>
+                    <td>Per Project</td>
+                    <td>₦500,000+</td>
+                    <td>Custom features and enhancements</td>
+                </tr>
+                <tr>
+                    <td><strong>Premium Support</strong></td>
+                    <td></td>
+                    <td>₦1,200,000</td>
+                    <td>Full support + infrastructure + priority development</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <p style="margin-top: 20px; font-style: italic; color: #64748b;">
+            <strong>Note:</strong> All support packages are optional. You maintain full ownership and can manage 
+            the platform independently or choose support as needed.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">2. Detailed Service Cost Breakdown</h2>
+        
+        <h3 class="subsection-title">2.1 Firebase Authentication</h3>
+        <ul>
+            <li><strong>Free Tier:</strong> Up to 50,000 monthly active users (MAUs) - <strong>FREE</strong></li>
+            <li><strong>Beyond Free Tier:</strong> $0.0055 per MAU (volume discounts available)</li>
+            <li><strong>Features Included:</strong> Email/password, social login, phone authentication, session management</li>
+            <li><strong>Security:</strong> Enterprise-grade authentication with industry-standard encryption</li>
+        </ul>
+
+        <h3 class="subsection-title">2.2 Two-Factor Authentication (2FA)</h3>
+        <ul>
+            <li><strong>Free Tier:</strong> First 10,000 phone verifications per month - <strong>FREE</strong></li>
+            <li><strong>Additional Verifications:</strong> $0.01 per verification (US, Canada, India) or $0.06 elsewhere</li>
+            <li><strong>Implementation:</strong> Built-in Firebase support, no additional infrastructure needed</li>
+            <li><strong>Security Benefit:</strong> Adds critical security layer protecting sensitive data</li>
+        </ul>
+
+        <h3 class="subsection-title">2.3 Cloud Storage (Firebase Storage)</h3>
+        <ul>
+            <li><strong>Storage Cost:</strong> $0.026 per GB per month</li>
+            <li><strong>Download Bandwidth:</strong> $0.12 per GB</li>
+            <li><strong>Free Tier:</strong> 5 GB storage, 1 GB/day downloads</li>
+            <li><strong>Use Cases:</strong> Document uploads, beneficiary photos, program reports, MoU files</li>
+            <li><strong>Security:</strong> Encrypted at rest and in transit, with granular access controls</li>
+        </ul>
+
+        <h3 class="subsection-title">2.4 Notification Services</h3>
+        <ul>
+            <li><strong>In-App Notifications:</strong> Powered by Firestore real-time updates - minimal cost</li>
+            <li><strong>Email Notifications:</strong> Can integrate with Firebase Extensions or third-party services</li>
+            <li><strong>Push Notifications:</strong> Firebase Cloud Messaging (FCM) - FREE for unlimited messages</li>
+            <li><strong>Cost Efficiency:</strong> Leverages existing Firestore infrastructure</li>
+        </ul>
+
+        <h3 class="subsection-title">2.5 Firestore Database</h3>
+        <ul>
+            <li><strong>Reads:</strong> $0.06 per 100,000 operations</li>
+            <li><strong>Writes:</strong> $0.18 per 100,000 operations</li>
+            <li><strong>Deletes:</strong> $0.02 per 100,000 operations</li>
+            <li><strong>Storage:</strong> $0.18 per GB per month</li>
+            <li><strong>Free Tier:</strong> 50,000 reads, 20,000 writes, 20,000 deletes per day</li>
+            <li><strong>Features:</strong> Real-time synchronization, offline support, automatic scaling</li>
+        </ul>
+
+        <h3 class="subsection-title">2.6 Cloud Functions</h3>
+        <ul>
+            <li><strong>Invocations:</strong> $0.40 per million invocations</li>
+            <li><strong>Compute Time:</strong> $0.000024 per vCPU-second</li>
+            <li><strong>Memory:</strong> $0.0000025 per GB-second</li>
+            <li><strong>Free Tier:</strong> 2 million invocations, 400,000 GB-seconds, 200,000 vCPU-seconds per month</li>
+            <li><strong>Use Cases:</strong> Automated workflows, data processing, audit logging, notifications</li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">3. Detailed Pricing Comparison with Leading Platforms</h2>
+        
+        <h3 class="subsection-title">3.1 Cost Comparison: One-Time Payment vs. Recurring Subscriptions</h3>
+        <p style="margin-bottom: 20px;">
+            The following table compares our one-time payment model with recurring costs of leading platforms 
+            (converted to Naira at ₦1,500/USD):
+        </p>
+        
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Pricing Model</th>
+                    <th>Total Cost (₦)</th>
+                    <th>Setup/Implementation (₦)</th>
+                    <th>Total Investment (₦)</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Salesforce Nonprofit Cloud - Enterprise</strong></td>
+                    <td>₦90,000/user/month</td>
+                    <td>₦32,400,000</td>
+                    <td>₦7,500,000 - ₦37,500,000</td>
+                    <td>₦39,900,000 - ₦69,900,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Salesforce Nonprofit Cloud - Unlimited</strong></td>
+                    <td>₦150,000/user/month</td>
+                    <td>₦54,000,000</td>
+                    <td>₦7,500,000 - ₦37,500,000</td>
+                    <td>₦61,500,000 - ₦91,500,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Amp Impact (on Salesforce)</strong></td>
+                    <td>₦7,500,000-₦187,500,000/year + licenses</td>
+                    <td>₦54,300,000 - ₦562,500,000</td>
+                    <td>₦7,500,000 - ₦37,500,000</td>
+                    <td>₦61,800,000 - ₦600,000,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Microsoft Cloud for Nonprofit</strong></td>
+                    <td>₦1,125,000/month or ₦13,500/user/month</td>
+                    <td>₦40,500,000 - ₦48,600,000</td>
+                    <td>₦7,500,000 - ₦22,500,000</td>
+                    <td>₦48,000,000 - ₦71,100,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Zoho for Nonprofits</strong></td>
+                    <td>Zoho CRM + Creator (₦34,500/user/month)</td>
+                    <td>₦12,420,000</td>
+                    <td>₦3,000,000 - ₦7,500,000</td>
+                    <td>₦15,420,000 - ₦19,920,000</td>
+                </tr>
+                <tr>
+                    <td><strong>ActivityInfo</strong></td>
+                    <td>₦5,550,000/year</td>
+                    <td>₦16,650,000</td>
+                    <td>₦1,500,000 - ₦4,500,000</td>
+                    <td>₦18,150,000 - ₦21,150,000</td>
+                </tr>
+                <tr style="background: #dcfce7; font-weight: bold; font-size: 16px;">
+                    <td><strong>Our Custom Solution</strong></td>
+                    <td><strong>One-Time Payment</strong></td>
+                    <td><strong>₦9,500,000</strong></td>
+                    <td><strong>₦0 (Included)</strong></td>
+                    <td><strong>₦9,500,000</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight" style="margin-top: 30px;">
+            <h3>Massive Cost Savings with One-Time Payment</h3>
+            <p style="font-size: 18px; line-height: 1.8;">
+                Our one-time payment of <strong>₦9,500,000</strong> provides exceptional value compared to recurring costs:
+            </p>
+            <ul style="margin-top: 15px; font-size: 16px;">
+                <li><strong>76-86% savings</strong> compared to Salesforce Nonprofit Cloud Enterprise (₦39.9M - ₦69.9M)</li>
+                <li><strong>85-90% savings</strong> compared to Salesforce Nonprofit Cloud Unlimited (₦61.5M - ₦91.5M)</li>
+                <li><strong>80-87% savings</strong> compared to Microsoft Cloud for Nonprofit (₦48M - ₦71.1M)</li>
+                <li><strong>38-52% savings</strong> compared to Zoho for Nonprofits (₦15.4M - ₦19.9M)</li>
+                <li><strong>45-55% savings</strong> compared to ActivityInfo (₦18.2M - ₦21.2M)</li>
+                <li><strong>98%+ savings</strong> compared to Amp Impact solutions (₦61.8M - ₦600M)</li>
+            </ul>
+            <p style="margin-top: 15px; font-size: 16px; font-weight: bold; color: #10b981;">
+                Total Savings: ₦5,900,000 - ₦590,500,000 depending on the alternative platform chosen.
+            </p>
+        </div>
+
+        <h3 class="subsection-title">3.2 Feature Comparison Matrix</h3>
+        <table class="comparison-table">
+            <thead>
+                <tr>
+                    <th>Feature/Consideration</th>
+                    <th class="custom-solution">Our Custom Solution</th>
+                    <th class="existing-solution">Existing Solutions</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td><strong>Payment Model</strong></td>
+                    <td class="custom-solution">One-time payment: ₦9,500,000</td>
+                    <td class="existing-solution">Recurring annual subscriptions</td>
+                </tr>
+                <tr>
+                    <td><strong>Total Cost (10 users)</strong></td>
+                    <td class="custom-solution">₦9,500,000 (one-time)</td>
+                    <td class="existing-solution">₦15,420,000 - ₦600,000,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Setup/Implementation Fee</strong></td>
+                    <td class="custom-solution">Included in one-time payment</td>
+                    <td class="existing-solution">₦3,000,000 - ₦37,500,000</td>
+                </tr>
+                <tr>
+                    <td><strong>Customization</strong></td>
+                    <td class="custom-solution">Fully customizable</td>
+                    <td class="existing-solution">Limited, requires add-ons</td>
+                </tr>
+                <tr>
+                    <td><strong>Data Ownership</strong></td>
+                    <td class="custom-solution">100% your data</td>
+                    <td class="existing-solution">Vendor-controlled</td>
+                </tr>
+                <tr>
+                    <td><strong>Scalability</strong></td>
+                    <td class="custom-solution">Unlimited, pay-as-you-scale</td>
+                    <td class="existing-solution">Tier-based pricing</td>
+                </tr>
+                <tr>
+                    <td><strong>Offline Capability</strong></td>
+                    <td class="custom-solution">Built-in, no extra cost</td>
+                    <td class="existing-solution">Often unavailable or premium</td>
+                </tr>
+                <tr>
+                    <td><strong>Real-time Updates</strong></td>
+                    <td class="custom-solution">Included</td>
+                    <td class="existing-solution">May require upgrades</td>
+                </tr>
+                <tr>
+                    <td><strong>API Access</strong></td>
+                    <td class="custom-solution">Full API access</td>
+                    <td class="existing-solution">Limited or premium</td>
+                </tr>
+                <tr>
+                    <td><strong>White-labeling</strong></td>
+                    <td class="custom-solution">Fully customizable branding</td>
+                    <td class="existing-solution">Additional fees</td>
+                </tr>
+                <tr>
+                    <td><strong>Contract Lock-in</strong></td>
+                    <td class="custom-solution">No contract, month-to-month</td>
+                    <td class="existing-solution">Annual contracts common</td>
+                </tr>
+                <tr>
+                    <td><strong>Support & Maintenance</strong></td>
+                    <td class="custom-solution">Direct access to developers</td>
+                    <td class="existing-solution">Ticket-based, slow response</td>
+                </tr>
+                <tr>
+                    <td><strong>Feature Development</strong></td>
+                    <td class="custom-solution">Prioritized based on your needs</td>
+                    <td class="existing-solution">Vendor roadmap, not yours</td>
+                </tr>
+                <tr>
+                    <td><strong>Security Compliance</strong></td>
+                    <td class="custom-solution">Google Cloud compliance (SOC 2, ISO 27001)</td>
+                    <td class="existing-solution">Varies by vendor</td>
+                </tr>
+                <tr>
+                    <td><strong>Migration Risk</strong></td>
+                    <td class="custom-solution">No migration needed</td>
+                    <td class="existing-solution">Data export challenges</td>
+                </tr>
+            </tbody>
+        </table>
+
+        <h3 class="subsection-title">3.3 Total Cost of Ownership Comparison</h3>
+        <p style="margin-bottom: 15px;">
+            Comparing total investment including setup costs (converted to Naira):
+        </p>
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Platform</th>
+                    <th>Total Cost (₦)</th>
+                    <th>Savings vs. Our Solution</th>
+                    <th>Savings Percentage</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Salesforce Nonprofit Cloud - Enterprise</td>
+                    <td>₦39,900,000 - ₦69,900,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦30,400,000 - ₦60,400,000</td>
+                    <td style="color: #10b981; font-weight: bold;">76% - 86%</td>
+                </tr>
+                <tr>
+                    <td>Salesforce Nonprofit Cloud - Unlimited</td>
+                    <td>₦61,500,000 - ₦91,500,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦52,000,000 - ₦82,000,000</td>
+                    <td style="color: #10b981; font-weight: bold;">85% - 90%</td>
+                </tr>
+                <tr>
+                    <td>Amp Impact (on Salesforce)</td>
+                    <td>₦61,800,000 - ₦600,000,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦52,300,000 - ₦590,500,000</td>
+                    <td style="color: #10b981; font-weight: bold;">85% - 98%</td>
+                </tr>
+                <tr>
+                    <td>Microsoft Cloud for Nonprofit</td>
+                    <td>₦48,000,000 - ₦71,100,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦38,500,000 - ₦61,600,000</td>
+                    <td style="color: #10b981; font-weight: bold;">80% - 87%</td>
+                </tr>
+                <tr>
+                    <td>Zoho for Nonprofits</td>
+                    <td>₦15,420,000 - ₦19,920,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦5,920,000 - ₦10,420,000</td>
+                    <td style="color: #10b981; font-weight: bold;">38% - 52%</td>
+                </tr>
+                <tr>
+                    <td>ActivityInfo</td>
+                    <td>₦18,150,000 - ₦21,150,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦8,650,000 - ₦11,650,000</td>
+                    <td style="color: #10b981; font-weight: bold;">45% - 55%</td>
+                </tr>
+                <tr style="background: #dbeafe; font-weight: bold; font-size: 16px;">
+                    <td><strong>Our Custom Solution (One-Time)</strong></td>
+                    <td><strong>₦9,500,000</strong></td>
+                    <td><strong>-</strong></td>
+                    <td><strong>-</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight" style="margin-top: 30px;">
+            <h3>Key Differentiators Beyond Price</h3>
+            <p style="font-size: 16px; line-height: 1.8;">
+                While our pricing is competitive, our solution offers additional advantages that justify the investment:
+            </p>
+            <ul style="margin-top: 15px; font-size: 16px;">
+                <li><strong>No Setup Fees:</strong> Unlike Salesforce and Microsoft which require implementation costs ($5,000-$50,000), our platform is ready to deploy</li>
+                <li><strong>No Vendor Lock-in:</strong> Complete data ownership and portability, unlike Salesforce and Microsoft ecosystems</li>
+                <li><strong>Offline-First:</strong> Built-in offline capability critical for field operations, not available in most competing platforms</li>
+                <li><strong>Unlimited Customization:</strong> Full control over features and workflows, unlike limited customization in Salesforce and Zoho</li>
+                <li><strong>Direct Support:</strong> Direct access to development team vs. ticket-based support in enterprise platforms</li>
+                <li><strong>Transparent Pricing:</strong> No hidden fees, add-ons, or surprise charges common in Salesforce and Microsoft ecosystems</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">4. Comparison: Custom Solution vs. Existing Platforms</h2>
+        
+        <table class="comparison-table">
+
+    <div class="section">
+        <h2 class="section-title">5. Competitive Advantages of Our Custom Solution</h2>
+        
+        <ul class="pros-list">
+            <li>
+                <strong>Tailored for overall management Operations:</strong> Built specifically for beneficiary management, 
+                program tracking, donations, grants, and partnership management. No unnecessary features 
+                or generic workflows that don't fit your operations.
+            </li>
+            <li>
+                <strong>Unmatched Cost Efficiency:</strong> One-time payment of ₦9,500,000 provides 76-98% savings 
+                compared to recurring subscription costs of existing platforms, with no hidden fees or surprise charges.
+            </li>
+            <li>
+                <strong>Complete Data Ownership:</strong> Your data resides in your Firebase project, 
+                giving you full control, portability, and compliance capabilities. No vendor lock-in.
+            </li>
+            <li>
+                <strong>Enterprise-Grade Security:</strong> Built on Google Cloud Platform with industry-leading 
+                security certifications (SOC 2, ISO 27001, GDPR compliance). Multi-layered security with 
+                role-based access control and 2FA support.
+            </li>
+            <li>
+                <strong>Offline-First Architecture:</strong> Field officers can work without internet connectivity, 
+                with automatic synchronization when connection is restored. Critical for remote operations.
+            </li>
+            <li>
+                <strong>Real-Time Collaboration:</strong> Instant updates across all users, enabling 
+                real-time coordination between headquarters, state offices, and field teams.
+            </li>
+            <li>
+                <strong>Unlimited Scalability:</strong> Built on Firebase's serverless infrastructure, 
+                the platform automatically scales from 10 to 100,000+ users without performance degradation.
+            </li>
+            <li>
+                <strong>Rapid Feature Development:</strong> Modern, maintainable codebase allows for 
+                quick implementation of new features based on your specific needs, not a vendor's roadmap.
+            </li>
+            <li>
+                <strong>Comprehensive Integration Capabilities:</strong> Built with modern APIs, enabling 
+                easy integration with accounting software, payment gateways, reporting tools, and other systems.
+            </li>
+            <li>
+                <strong>Mobile-Responsive Design:</strong> Works seamlessly on desktop, tablet, and mobile 
+                devices without requiring separate mobile app development or licensing.
+            </li>
+            <li>
+                <strong>Advanced Analytics & Reporting:</strong> Real-time dashboards, customizable reports, 
+                and data export capabilities built-in, not as expensive add-ons.
+            </li>
+            <li>
+                <strong>Transparent Pricing:</strong> One-time payment covers everything. No recurring fees, 
+                no per-user licensing fees, no feature-based pricing tiers, no surprise charges.
+            </li>
+            <li>
+                <strong>Direct Developer Access:</strong> Issues are resolved quickly with direct access to 
+                the development team, not through slow support tickets.
+            </li>
+            <li>
+                <strong>Future-Proof Technology:</strong> Built with modern, actively-maintained technologies 
+                (React, TypeScript, Firebase) ensuring long-term viability and easy maintenance.
+            </li>
+            <li>
+                <strong>No Vendor Dependency:</strong> You own the codebase and can bring development in-house 
+                or switch developers without losing access to your platform.
+            </li>
+        </ul>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">6. Return on Investment (ROI) Analysis</h2>
+        
+        <div class="roi-section">
+            <h2>Investment Confidence Metrics</h2>
+            
+            <div class="metric-box">
+                <div class="number">76-98%</div>
+                <div>Cost Savings vs. Leading Platforms</div>
+            </div>
+            
+            <div class="metric-box">
+                <div class="number">₦30.4M - ₦60.4M</div>
+                <div>3-Year Savings (vs. Salesforce)</div>
+            </div>
+            
+            <div class="metric-box">
+                <div class="number">₦9,500,000</div>
+                <div>One-Time Payment</div>
+            </div>
+            
+            <div class="metric-box">
+                <div class="number">99.95%</div>
+                <div>Uptime SLA (Google Cloud)</div>
+            </div>
+        </div>
+
+        <h3 class="subsection-title">6.1 Total Cost of Ownership (TCO) Comparison (10 Users)</h3>
+        <p style="margin-bottom: 15px;">
+            Comparing total cost of ownership (all amounts in Naira):
+        </p>
+        
+        <table class="cost-table">
+            <thead>
+                <tr>
+                    <th>Cost Component</th>
+                    <th>Our Solution</th>
+                    <th>Salesforce Nonprofit Cloud</th>
+                    <th>Microsoft Cloud</th>
+                    <th>Savings vs. Salesforce</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Initial Setup/Implementation</td>
+                    <td>₦0 (Included)</td>
+                    <td>₦7,500,000 - ₦37,500,000</td>
+                    <td>₦7,500,000 - ₦22,500,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦7,500,000 - ₦37,500,000</td>
+                </tr>
+                <tr>
+                    <td>Year 1 Subscription</td>
+                    <td>₦0 (One-time payment)</td>
+                    <td>₦10,800,000</td>
+                    <td>₦13,500,000 - ₦16,200,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦10,800,000</td>
+                </tr>
+                <tr>
+                    <td>Year 2 Subscription</td>
+                    <td>₦0 (One-time payment)</td>
+                    <td>₦10,800,000</td>
+                    <td>₦13,500,000 - ₦16,200,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦10,800,000</td>
+                </tr>
+                <tr>
+                    <td>Year 3 Subscription</td>
+                    <td>₦0 (One-time payment)</td>
+                    <td>₦10,800,000</td>
+                    <td>₦13,500,000 - ₦16,200,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦10,800,000</td>
+                </tr>
+                <tr>
+                    <td>Customization/Add-ons</td>
+                    <td>₦0 (Included + ₦800K credit)</td>
+                    <td>₦7,500,000 - ₦15,000,000</td>
+                    <td>₦4,500,000 - ₦12,000,000</td>
+                    <td style="color: #10b981; font-weight: bold;">₦7,500,000 - ₦15,000,000</td>
+                </tr>
+                <tr style="background: #dbeafe; font-weight: bold; font-size: 16px;">
+                    <td><strong>TOTAL</strong></td>
+                    <td><strong>₦9,500,000</strong></td>
+                    <td><strong>₦39,900,000 - ₦69,900,000</strong></td>
+                    <td><strong>₦48,000,000 - ₦71,100,000</strong></td>
+                    <td style="color: #10b981; font-weight: bold; font-size: 18px;"><strong>₦30,400,000 - ₦60,400,000</strong></td>
+                </tr>
+            </tbody>
+        </table>
+
+        <div class="highlight" style="margin-top: 30px;">
+            <h3>ROI Calculation</h3>
+            <p style="font-size: 18px;">
+                <strong>Return on Investment:</strong> For every ₦1 invested in our solution, 
+                you save approximately <strong>₦3.20 - ₦6.36</strong> compared to Salesforce Nonprofit Cloud.
+            </p>
+            <p style="font-size: 18px; margin-top: 10px;">
+                <strong>Payback Period:</strong> Immediate - the solution is fully developed and ready for handover. 
+                No setup fees, no waiting period, immediate deployment.
+            </p>
+            <p style="font-size: 18px; margin-top: 10px;">
+                <strong>Savings:</strong> Organizations save <strong>₦30,400,000 - ₦60,400,000</strong> 
+                compared to Salesforce, representing a <strong>76-86% cost reduction</strong>.
+            </p>
+            <p style="font-size: 18px; margin-top: 10px; font-weight: bold; color: #10b981;">
+                <strong>Break-even Point:</strong> Our one-time payment pays for itself in less than 4 months 
+                compared to Salesforce's annual subscription model.
+            </p>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">7. Risk Mitigation & Assurance</h2>
+        
+        <div class="confidence-box">
+            <h3>Why Investors Can Have High Confidence</h3>
+            
+            <h4 style="margin-top: 20px; color: #0369a1;">1. Proven Infrastructure</h4>
+            <p>
+                Built on Google Cloud Platform (Firebase), the same infrastructure powering Google's own services 
+                and millions of applications worldwide. This ensures:
+            </p>
+            <ul>
+                <li>99.95% uptime SLA guarantee</li>
+                <li>Automatic scaling and load balancing</li>
+                <li>Global CDN for fast access worldwide</li>
+                <li>Enterprise-grade security and compliance</li>
+                <li>Automatic backups and disaster recovery</li>
+            </ul>
+
+            <h4 style="margin-top: 20px; color: #0369a1;">2. Transparent, One-Time Investment</h4>
+            <p>
+                Unlike subscription-based platforms with recurring fees, our solution offers:
+            </p>
+            <ul>
+                <li>Single one-time payment of ₦9,500,000 - no recurring fees</li>
+                <li>No per-user licensing fees</li>
+                <li>No feature-based pricing tiers</li>
+                <li>Infrastructure costs included</li>
+                <li>Support and maintenance included</li>
+                <li>Future enhancement credit included</li>
+            </ul>
+
+            <h4 style="margin-top: 20px; color: #0369a1;">3. Future-Proof Technology</h4>
+            <p>
+                Built with modern, industry-standard technologies:
+            </p>
+            <ul>
+                <li>React 18+ (used by Facebook, Netflix, Airbnb)</li>
+                <li>TypeScript (used by Microsoft, Google, major tech companies)</li>
+                <li>Firebase (actively maintained by Google)</li>
+                <li>Large developer community ensures long-term support</li>
+                <li>Easy to maintain and extend</li>
+            </ul>
+
+            <h4 style="margin-top: 20px; color: #0369a1;">4. Complete Control & Flexibility</h4>
+            <p>
+                You maintain full control over:
+            </p>
+            <ul>
+                <li>Your data (stored in your Firebase project)</li>
+                <li>Feature development priorities</li>
+                <li>Customization and branding</li>
+                <li>Integration with other systems</li>
+                <li>Migration path if needed (data export capabilities)</li>
+            </ul>
+
+            <h4 style="margin-top: 20px; color: #0369a1;">5. Security & Compliance</h4>
+            <p>
+                Enterprise-level security measures:
+            </p>
+            <ul>
+                <li>Multi-layered security architecture</li>
+                <li>Role-based access control (RBAC)</li>
+                <li>Two-factor authentication (2FA) support</li>
+                <li>Data encryption at rest and in transit</li>
+                <li>Audit logging for compliance</li>
+                <li>GDPR and data privacy ready</li>
+            </ul>
+
+            <h4 style="margin-top: 20px; color: #0369a1;">6. Scalability Without Limits</h4>
+            <p>
+                The platform can grow with your organization:
+            </p>
+            <ul>
+                <li>From 10 to 100,000+ users without architecture changes</li>
+                <li>Automatic scaling based on demand</li>
+                <li>No performance degradation as you grow</li>
+                <li>Cost scales linearly with usage</li>
+            </ul>
+        </div>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">8. Support & Maintenance</h2>
+        
+        <h3 class="subsection-title">8.2 Ongoing Support</h3>
+        <ul>
+            <li>Direct access to development team</li>
+            <li>Regular security updates and patches</li>
+            <li>Feature development based on your priorities (using ₦800K credit)</li>
+            <li>Performance monitoring and optimization</li>
+            <li>Documentation and training materials</li>
+            <li>Technical support and troubleshooting</li>
+        </ul>
+
+        <h3 class="subsection-title">8.3 Infrastructure Coverage </h3>
+        <p>
+            Infrastructure costs are fully covered, including:
+        </p>
+        <ul>
+            <li>Firebase Authentication (up to 50,000 users)</li>
+            <li>Firestore Database operations and storage</li>
+            <li>Cloud Storage for documents and media</li>
+            <li>Cloud Functions for automated workflows</li>
+            <li>Firebase Hosting with CDN and SSL</li>
+            <li>Notification services</li>
+        </ul>
+
+        <h3 class="subsection-title">8.4 Support & Maintenance</h3>
+        <ul>
+            <li>Direct access to development team</li>
+            <li>Regular security updates and patches</li>
+            <li>Feature development based on your priorities (using ₦800K credit)</li>
+            <li>Performance monitoring and optimization</li>
+            <li>Documentation and training materials</li>
+            <li>Technical support and troubleshooting</li>
+        </ul>
+        <p style="margin-top: 15px;">
+            <strong>After :</strong> Infrastructure costs are minimal (typically ₦200,000-₦300,000 per year 
+            for 10 users). You can continue managing directly with Firebase or extend through our support packages.
+        </p>
+    </div>
+
+    <div class="section">
+        <h2 class="section-title">9. Conclusion</h2>
+        
+        <p style="font-size: 16px; line-height: 1.8; text-align: justify; margin-bottom: 20px;">
+            The Integrated Management & Impact System represents a paradigm shift in management platform economics. 
+            The solution is fully developed, production-ready, and available for immediate handover. This one-time 
+            investment of ₦9,500,000 provides complete platform ownership, infrastructure coverage, 
+            developer support, and future enhancement capabilities. By leveraging modern cloud infrastructure and 
+            custom development, we've created a solution that delivers enterprise-grade capabilities at a fraction 
+            of the cost of recurring subscription models, while offering superior value through customization, 
+            support, and flexibility compared to existing platforms.
+        </p>
+
+        <div class="total-cost">
+            <h2>Investment Summary</h2>
+            <div class="amount">₦9,500,000</div>
+            <p style="font-size: 18px; margin-top: 10px;">One-Time Payment</p>
+            <p style="font-size: 16px; margin-top: 15px;">
+                <strong>Complete solution handover</strong> | Includes platform, infrastructure, developer support, and future enhancements
+            </p>
+        </div>
+
+        <div class="highlight" style="background: #dbeafe; border-left-color: #2563eb;">
+            <h3 style="color: #1e40af;">Key Investment Decision Factors</h3>
+            <ul style="margin-top: 15px; font-size: 16px;">
+                <li><strong>One-Time Payment:</strong> ₦9,500,000 covers everything - no recurring fees</li>
+                <li><strong>Complete Ownership:</strong> Full platform ownership and source code transfer</li>
+                <li><strong>Infrastructure Covered:</strong> Firebase services included</li>
+                <li><strong>Ongoing Support:</strong> Developer support and maintenance included</li>
+                <li><strong>Future Enhancements:</strong> ₦800,000 credit for future feature development</li>
+                <li><strong>Massive Savings:</strong> 76-98% cheaper than recurring subscription platforms</li>
+                <li><strong>Immediate Deployment:</strong> Solution ready for handover - no development wait time</li>
+                <li><strong>No Vendor Lock-in:</strong> Complete control over your platform and data</li>
+            </ul>
+        </div>
+
+        <p style="font-size: 16px; line-height: 1.8; text-align: justify; margin-top: 30px;">
+            This platform is not just a cost-saving measure—it's a strategic investment in operational efficiency, 
+            data security, and organizational growth. By choosing this custom solution, you're investing in a platform 
+            that will evolve with your organization, adapt to your specific needs, and provide exceptional value for 
+            years to come.
+        </p>
+
+        <p style="font-size: 18px; font-weight: bold; color: #1e40af; margin-top: 30px; text-align: center;">
+            Ready to take ownership of a fully-developed, production-ready platform with massive cost savings?
+        </p>
+        <p style="font-size: 16px; text-align: center; margin-top: 15px; color: #64748b;">
+            One-time payment of <strong>₦9,500,000</strong> | Solution ready for immediate handover | 
+            Includes infrastructure + developer support + future enhancement credit
+        </p>
+    </div>
+
+    <div class="footer">
+        <div style="border-top: 2px solid #e2e8f0; padding-top: 30px; margin-top: 40px;">
+            <h3 style="color: #1e40af; margin-bottom: 20px; text-align: center;">Contact Information</h3>
+            <div style="display: grid; grid-template-columns: repeat(2, 1fr); gap: 20px; margin-bottom: 30px;">
+                <div style="text-align: center;">
+                    <strong style="color: #334155; display: block; margin-bottom: 10px; font-size: 16px;">Kodek Innovations Limited</strong>
+                    <p style="margin: 5px 0; font-size: 14px; color: #64748b;">
+                        Digital Transformation & IT Solutions<br>
+                        Established 2018
+                    </p>
+                </div>
+                <div style="text-align: center;">
+                    <strong style="color: #334155; display: block; margin-bottom: 10px; font-size: 16px;">Get in Touch</strong>
+                    <p style="margin: 5px 0; font-size: 14px; color: #64748b;">
+                        <strong>Phone:</strong><br>
+                        +234 8163199536<br>
+                        +234 8134384128<br>
+                        +234 9028551188<br>
+                        <strong>Email:</strong> info@kodekinnovations.com<br>
+                        <strong>Website:</strong> kodekinnovations.com
+                    </p>
+                </div>
+            </div>
+        </div>
+        
+        <p><strong>Integrated Management & Impact System</strong></p>
+        <p>Cost Analysis & Investment Proposal</p>
+        <p style="margin-top: 10px;">Prepared by: <strong>Kodek Innovations Limited</strong></p>
+        <p style="margin-top: 5px;">Document Generated: <span id="date"></span></p>
+        <p style="margin-top: 5px; font-size: 12px;">
+            This document contains proprietary information. All pricing is based on current Firebase pricing 
+            as of 2025 and may be subject to change. Actual costs may vary based on usage patterns.
+        </p>
+        <p style="margin-top: 5px; font-size: 12px;">
+            <strong>Pricing Sources:</strong> Salesforce Nonprofit Cloud pricing from salesforce.com/nonprofit/pricing/ (2025), 
+            Microsoft Cloud for Nonprofit pricing from Microsoft partner documentation (2025), Zoho pricing from zoho.com/nonprofits/ (2025), 
+            Amp Impact pricing from guides.techimpact.org (2025), ActivityInfo pricing from activityinfo.org/about/pricing/ (2025).
+            <br><strong>Currency Conversion:</strong> USD to NGN conversion rate used: ₦1,500 per USD (approximate market rate as of 2025).
+        </p>
+        <p style="margin-top: 15px; font-size: 11px; color: #94a3b8;">
+            © 2025 Kodek Innovations Limited. All rights reserved.
+        </p>
+    </div>
+
+    <script>
+        document.getElementById('date').textContent = new Date().toLocaleDateString('en-US', { 
+            year: 'numeric', 
+            month: 'long', 
+            day: 'numeric' 
+        });
+    </script>
+</body>
+</html>

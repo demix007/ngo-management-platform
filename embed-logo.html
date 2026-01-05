@@ -1,0 +1,66 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Logo to Base64 Converter</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 50px auto;
+            padding: 20px;
+        }
+        input[type="file"] {
+            margin: 20px 0;
+            padding: 10px;
+        }
+        textarea {
+            width: 100%;
+            height: 200px;
+            margin: 20px 0;
+            padding: 10px;
+            font-family: monospace;
+        }
+        button {
+            background: #1e40af;
+            color: white;
+            padding: 10px 20px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+        button:hover {
+            background: #1e3a8a;
+        }
+    </style>
+</head>
+<body>
+    <h1>Convert Logo to Base64 for HTML Embedding</h1>
+    <p>Select your logo image file (PNG, JPG, or SVG) to convert it to base64 format:</p>
+    
+    <input type="file" id="logoFile" accept="image/*">
+    
+    <div id="result" style="display: none;">
+        <h3>Base64 Data URI (Copy this):</h3>
+        <textarea id="base64Output" readonly></textarea>
+        <p><strong>Instructions:</strong> Copy the text above and replace the img src in your HTML file with it.</p>
+    </div>
+
+    <script>
+        document.getElementById('logoFile').addEventListener('change', function(e) {
+            const file = e.target.files[0];
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function(e) {
+                    const base64 = e.target.result;
+                    document.getElementById('base64Output').value = base64;
+                    document.getElementById('result').style.display = 'block';
+                };
+                reader.readAsDataURL(file);
+            }
+        });
+    </script>
+</body>
+</html>
+
+
+
