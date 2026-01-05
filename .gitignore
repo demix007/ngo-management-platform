@@ -38,6 +38,7 @@ service-account-key.json
 firebase-debug.log
 firestore-debug.log
 ui-debug.log
+src/lib/firebase.ts
 
 # Testing
 coverage
